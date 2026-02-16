@@ -1,0 +1,24 @@
+services:
+  shieldai:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+      - "8484:8484"
+    volumes:
+      # Source code — hot reload for both Vite and tsx watch
+      - .:/app
+      # Prevent host node_modules from overriding container's Linux binaries
+      - /app/node_modules
+      # Docker socket — lets dockerode inspect host containers
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Configs dir — collector scans for compose files, fix-engine writes generated files
+      - ./configs:/configs
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=development
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+    tty: true
+    stdin_open: true

@@ -1,0 +1,271 @@
+@import "tailwindcss";
+
+@theme {
+  /* Typography - Plus Jakarta Sans for UI, JetBrains Mono for code */
+  --font-family-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-family-mono: "JetBrains Mono", monospace;
+
+  /* Perimeter Theme: Green-Tinted Dark Palette */
+
+  /* Backgrounds (green undertone, not pure gray) */
+  --color-background: 10 15 12; /* #0a0f0c — deep dark with green tint */
+  --color-card: 16 24 18; /* #101812 — surface/cards */
+  --color-secondary: 22 33 26; /* #16211a — elevated surfaces, hover */
+  --color-muted: 22 33 26; /* #16211a — same as secondary */
+  --color-accent: 28 42 32; /* #1c2a20 — active/pressed states */
+
+  /* Text (softened green-tinted grays) */
+  --color-foreground: 200 210 205; /* #c8d2cd — softer primary text */
+  --color-card-foreground: 200 210 205; /* #c8d2cd */
+  --color-muted-foreground: 143 168 152; /* #8fa898 — secondary text */
+
+  /* Primary (Shield Green) - the "safe" color */
+  --color-primary: 34 197 94; /* #22c55e — green-500, shield/safe */
+  --color-primary-foreground: 10 15 12; /* #0a0f0c — dark text on green */
+
+  /* Borders (visible but subtle) */
+  --color-border: 30 46 34; /* #1e2e22 — green-tinted border */
+  --color-input: 30 46 34; /* #1e2e22 */
+  --color-ring: 34 197 94; /* #22c55e — green focus ring */
+
+  /* Destructive (semantic red) */
+  --color-destructive: 239 68 68; /* #ef4444 — red-500 */
+  --color-destructive-foreground: 255 255 255;
+
+  /* Secondary foreground */
+  --color-secondary-foreground: 200 210 205; /* #c8d2cd */
+  --color-accent-foreground: 200 210 205; /* #c8d2cd */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+}
+
+code {
+  font-family: var(--font-family-mono);
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(10 15 12); /* background color */
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(30 46 34); /* border color */
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(34 197 94); /* primary color */
+}
+
+/* Focus ring for accessibility */
+*:focus-visible {
+  outline: 2px solid rgb(34 197 94); /* green focus ring */
+  outline-offset: 2px;
+}
+
+/* Dot grid background - applied via DotGrid component */
+.dot-grid-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(34, 197, 94, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Shimmer animation for skeleton loading */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+/* Chat markdown styling */
+.prose {
+  --tw-prose-body: rgb(var(--color-foreground));
+  --tw-prose-headings: rgb(var(--color-foreground));
+  --tw-prose-lead: rgb(var(--color-muted-foreground));
+  --tw-prose-links: rgb(var(--color-primary));
+  --tw-prose-bold: rgb(var(--color-foreground));
+  --tw-prose-counters: rgb(var(--color-muted-foreground));
+  --tw-prose-bullets: rgb(var(--color-muted-foreground));
+  --tw-prose-hr: rgb(var(--color-border));
+  --tw-prose-quotes: rgb(var(--color-foreground));
+  --tw-prose-quote-borders: rgb(var(--color-border));
+  --tw-prose-captions: rgb(var(--color-muted-foreground));
+  --tw-prose-code: rgb(var(--color-foreground));
+  --tw-prose-pre-code: rgb(var(--color-foreground));
+  --tw-prose-pre-bg: rgb(var(--color-card));
+  --tw-prose-th-borders: rgb(var(--color-border));
+  --tw-prose-td-borders: rgb(var(--color-border));
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+  font-weight: 500;
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  background-color: rgb(var(--color-card));
+  border: 1px solid rgb(var(--color-border));
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+}
+
+.prose :where(pre code):not(:where([class~="not-prose"] *)) {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.prose :where(ul):not(:where([class~="not-prose"] *)),
+.prose :where(ol):not(:where([class~="not-prose"] *)) {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.prose :where(li):not(:where([class~="not-prose"] *)) {
+  margin: 0.25rem 0;
+}
+
+.prose :where(p):not(:where([class~="not-prose"] *)) {
+  margin: 0.5rem 0;
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"] *)) {
+  border-left: 3px solid rgb(var(--color-primary));
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+  font-style: italic;
+  color: rgb(var(--color-muted-foreground));
+}
+
+.prose :where(table):not(:where([class~="not-prose"] *)) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+}
+
+.prose :where(th):not(:where([class~="not-prose"] *)),
+.prose :where(td):not(:where([class~="not-prose"] *)) {
+  border: 1px solid rgb(var(--color-border));
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.prose :where(th):not(:where([class~="not-prose"] *)) {
+  background-color: rgb(var(--color-card));
+  font-weight: 600;
+}
+
+/* Syntax highlighting for code blocks - Dark theme */
+.hljs {
+  background: rgb(var(--color-card)) !important;
+  color: rgb(var(--color-foreground)) !important;
+  padding: 1rem !important;
+  border-radius: 0.5rem !important;
+  overflow-x: auto !important;
+}
+
+/* Syntax highlighting colors */
+.hljs-comment,
+.hljs-quote {
+  color: rgb(var(--color-muted-foreground));
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-type {
+  color: #c678dd; /* Purple */
+}
+
+.hljs-number,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #d19a66; /* Orange */
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition {
+  color: rgb(var(--color-primary)); /* Green */
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #e5c07b; /* Yellow */
+}
+
+.hljs-function .hljs-title,
+.hljs-title.function_ {
+  color: #61afef; /* Blue */
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #e06c75; /* Red */
+}
+
+.hljs-meta,
+.hljs-meta .hljs-string {
+  color: #abb2bf; /* Light gray */
+}
+
+.hljs-tag,
+.hljs-name {
+  color: #e06c75; /* Red */
+}
+
+.hljs-deletion {
+  color: #e06c75; /* Red */
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link {
+  color: #61afef; /* Blue */
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
