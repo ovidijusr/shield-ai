@@ -38,6 +38,11 @@ data/
 configs/
 docs/
 
+# Markdown files (except README.md and CLI.md)
+*.md
+!README.md
+!CLI.md
+
 # Testing
 coverage/
 .nyc_output/
